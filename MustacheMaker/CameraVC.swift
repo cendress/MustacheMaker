@@ -8,7 +8,7 @@
 import AVFoundation
 import UIKit
 
-class ViewController: UIViewController {
+class CameraVC: UIViewController {
   var cameraPreviewView: UIView!
   var startRecordingButton: UIButton!
   var stopRecordingButton: UIButton!
