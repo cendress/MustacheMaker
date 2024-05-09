@@ -105,8 +105,8 @@ class CameraVC: UIViewController {
     
     // Setup camera inputs:
     
+    let initialCameraDevice = getCameraDevice(.front)
     // Exit if the device's camera can't initialize video input from the camera
-    let initialCameraDevice = getCameraDevice(.back)
     guard let videoInput = try? AVCaptureDeviceInput(device: initialCameraDevice) else { return }
     
     // If capture session can add the video input, add it
