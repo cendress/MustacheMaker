@@ -78,7 +78,7 @@ class CameraVC: UIViewController {
   
   private func setupNavigationBar() {
     let flipCameraButton = UIBarButtonItem(image: UIImage(named: "arrow.triangle.2.circlepath.camera"), style: .plain, target: self, action: #selector(flipCamera))
-    navigationItem.rightBarButtonItem = flipCameraButton
+    navigationItem.leftBarButtonItem = flipCameraButton
   }
   
   //MARK: - Video & AR methods
