@@ -23,8 +23,8 @@ class CameraVC: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    setupUI()
     setupNavigationBar()
+    setupUI()
     setupCameraSession()
   }
   
