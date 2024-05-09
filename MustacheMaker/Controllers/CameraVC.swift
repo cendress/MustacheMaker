@@ -112,8 +112,13 @@ class CameraVC: UIViewController {
     
     // Setup preview layer:
     
+    previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+    previewLayer.frame = cameraPreviewView.bounds
+    previewLayer.videoGravity = .resizeAspectFill
+    cameraPreviewView.layer.addSublayer(previewLayer)
     
+    captureSession.commitConfiguration()
+    captureSession.startRunning()
   }
-  
 }
 
