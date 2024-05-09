@@ -73,6 +73,12 @@ class CameraVC: UIViewController {
       stopRecordingButton.heightAnchor.constraint(equalToConstant: 50),
       stopRecordingButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -60)
     ])
+    
+    // Gesture recognizer for double-tap
+    let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleDoubleTap))
+    doubleTapGesture.numberOfTapsRequired = 2
+    cameraPreviewView.isUserInteractionEnabled = true
+    cameraPreviewView.addGestureRecognizer(doubleTapGesture)
   }
   
   //MARK: - Video & AR methods
@@ -157,5 +163,9 @@ class CameraVC: UIViewController {
   
   private func getCameraDevice(_ position: AVCaptureDevice.Position) -> AVCaptureDevice {
     return AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: position) ?? AVCaptureDevice.default(for: .video)!
+  }
+  
+  @objc private func handleDoubleTap() {
+    flipCamera()
   }
 }
