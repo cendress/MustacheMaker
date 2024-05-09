@@ -27,6 +27,11 @@ class CameraVC: UIViewController {
     setupCameraSession()
   }
   
+  override func viewDidLayoutSubviews() {
+    super.viewDidLayoutSubviews()
+    previewLayer.frame = cameraPreviewView.bounds
+  }
+  
   //MARK: - Setup UI method
   
   private func setupUI() {
@@ -56,7 +61,7 @@ class CameraVC: UIViewController {
       cameraPreviewView.topAnchor.constraint(equalTo: view.topAnchor),
       cameraPreviewView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
       cameraPreviewView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-      cameraPreviewView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -150),
+      cameraPreviewView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
       
       startRecordingButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
       startRecordingButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding),
@@ -70,7 +75,7 @@ class CameraVC: UIViewController {
     ])
   }
   
-  //MARK: - Start and stop recording methods
+  //MARK: - Video, camera, & AR methods
   
   @objc private func startRecording() {
     
@@ -78,6 +83,11 @@ class CameraVC: UIViewController {
   
   @objc private func stopRecording() {
     
+  }
+  
+  private func showARView() {
+    let arVC = ARVC()
+    self.present(arVC, animated: true, completion: nil)
   }
   
   //MARK: - Camera session method
@@ -113,7 +123,6 @@ class CameraVC: UIViewController {
     // Setup preview layer:
     
     previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-    previewLayer.frame = cameraPreviewView.bounds
     previewLayer.videoGravity = .resizeAspectFill
     cameraPreviewView.layer.addSublayer(previewLayer)
     
