@@ -89,7 +89,7 @@ class CameraVC: UIViewController, ARSCNViewDelegate {
   }
   
   func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
-    guard let faceAnchor = anchor as? ARFaceAnchor else { return }
+    guard anchor is ARFaceAnchor else { return }
 
     // Perform on main thread since it updates the UI
     DispatchQueue.main.async {
@@ -99,7 +99,7 @@ class CameraVC: UIViewController, ARSCNViewDelegate {
         node.addChildNode(mustacheNode)
         
         // May need adjusting
-        mustacheNode.position = SCNVector3(x: 0, y: -0.03, z: 0.09)
+        mustacheNode.position = SCNVector3(x: 0, y: -0.0275, z: 0.07)
         mustacheNode.scale = SCNVector3(0.13, 0.13, 0.13)
       } else {
         if let existingNode = node.childNode(withName: "mustache", recursively: false) {
