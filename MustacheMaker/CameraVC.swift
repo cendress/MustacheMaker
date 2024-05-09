@@ -9,11 +9,17 @@ import AVFoundation
 import UIKit
 
 class CameraVC: UIViewController {
+  // UI variables
   private var cameraPreviewView: UIView!
   private var startRecordingButton: UIButton!
   private var stopRecordingButton: UIButton!
   
   private let padding: CGFloat = 20
+  
+  // Camera session variables
+  var captureSession: AVCaptureSession!
+  var videoOutput: AVCaptureVideoDataOutput!
+  var previewLayer: AVCaptureVideoPreviewLayer!
   
   override func viewDidLoad() {
     super.viewDidLoad()
