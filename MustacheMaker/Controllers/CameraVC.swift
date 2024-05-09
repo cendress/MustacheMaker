@@ -22,6 +22,8 @@ class CameraVC: UIViewController, ARSCNViewDelegate {
     setupARSession()
   }
   
+  //MARK: - Setup UI method
+  
   private func setupUI() {
     arSCNView = ARSCNView()
     arSCNView.delegate = self
@@ -64,30 +66,45 @@ class CameraVC: UIViewController, ARSCNViewDelegate {
     ])
   }
   
+  //MARK: - Setup AR session method
+  
   private func setupARSession() {
+    // Exit if the device doesn't support AR face tracking
     guard ARFaceTrackingConfiguration.isSupported else {
       print("AR Face Tracking is not supported on this device.")
       return
     }
+    
     let configuration = ARFaceTrackingConfiguration()
+    // Reset face tracking and any existing anchors when session starts
     arSCNView.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
   }
   
   @objc private func startRecording() {
-    // Start recording AR session or handle related functionality
+    // Start recording AR session
   }
   
   @objc private func stopRecording() {
-    // Stop recording AR session or handle related functionality
+    // Stop recording AR session
   }
   
   func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
     guard let faceAnchor = anchor as? ARFaceAnchor else { return }
-    
+
+    // Perform on main thread since it updates the UI
     DispatchQueue.main.async {
+      // Ensure there are no duplicate mustaches
       if node.childNode(withName: "mustache", recursively: false) == nil {
         let mustacheNode = self.createMustacheNode()
         node.addChildNode(mustacheNode)
+        
+        // May need adjusting
+        mustacheNode.position = SCNVector3(x: 0, y: -0.03, z: 0.09)
+        mustacheNode.scale = SCNVector3(0.13, 0.13, 0.13)
+      } else {
+        if let existingNode = node.childNode(withName: "mustache", recursively: false) {
+          print("Mustache already exists at position \(existingNode.position), scale: \(existingNode.scale)")
+        }
       }
     }
   }
@@ -96,8 +113,6 @@ class CameraVC: UIViewController, ARSCNViewDelegate {
     let mustacheScene = SCNScene(named: "mustache.scn")!
     let mustacheNode = mustacheScene.rootNode.childNodes.first!
     mustacheNode.name = "mustache"
-    mustacheNode.position = SCNVector3(x: 0, y: 0.011, z: 0.07)
-    mustacheNode.scale = SCNVector3(0.002, 0.002, 0.002)
     return mustacheNode
   }
 }
