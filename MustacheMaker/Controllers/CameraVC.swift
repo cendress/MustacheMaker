@@ -23,7 +23,6 @@ class CameraVC: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    setupNavigationBar()
     setupUI()
     setupCameraSession()
   }
@@ -74,11 +73,6 @@ class CameraVC: UIViewController {
       stopRecordingButton.heightAnchor.constraint(equalToConstant: 50),
       stopRecordingButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -60)
     ])
-  }
-  
-  private func setupNavigationBar() {
-    let flipCameraButton = UIBarButtonItem(image: UIImage(named: "arrow.triangle.2.circlepath.camera"), style: .plain, target: self, action: #selector(flipCamera))
-    navigationItem.leftBarButtonItem = flipCameraButton
   }
   
   //MARK: - Video & AR methods
