@@ -24,6 +24,7 @@ class CameraVC: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     setupUI()
+    setupNavigationBar()
     setupCameraSession()
   }
   
@@ -75,7 +76,12 @@ class CameraVC: UIViewController {
     ])
   }
   
-  //MARK: - Video, camera, & AR methods
+  private func setupNavigationBar() {
+    let flipCameraButton = UIBarButtonItem(image: UIImage(named: "arrow.triangle.2.circlepath.camera"), style: .plain, target: self, action: #selector(flipCamera))
+    navigationItem.rightBarButtonItem = flipCameraButton
+  }
+  
+  //MARK: - Video & AR methods
   
   @objc private func startRecording() {
     
@@ -90,7 +96,8 @@ class CameraVC: UIViewController {
     self.present(arVC, animated: true, completion: nil)
   }
   
-  //MARK: - Camera session method
+  
+  //MARK: - Camera methods
   
   private func setupCameraSession() {
     captureSession = AVCaptureSession()
@@ -98,9 +105,9 @@ class CameraVC: UIViewController {
     
     // Setup camera inputs:
     
-    // Exit if the device's camera can't be accessed or can't initialize video input from the camera
-    guard let videoCaptureDevice = AVCaptureDevice.default(for: .video) else { return }
-    guard let videoInput = try? AVCaptureDeviceInput(device: videoCaptureDevice) else { return }
+    // Exit if the device's camera can't initialize video input from the camera
+    let initialCameraDevice = getCameraDevice(.back)
+    guard let videoInput = try? AVCaptureDeviceInput(device: initialCameraDevice) else { return }
     
     // If capture session can add the video input, add it
     if captureSession.canAddInput(videoInput) {
@@ -129,5 +136,32 @@ class CameraVC: UIViewController {
     captureSession.commitConfiguration()
     captureSession.startRunning()
   }
+  
+  @objc private func flipCamera() {
+    guard let currentInput = captureSession.inputs.first as? AVCaptureDeviceInput else {
+      return
+    }
+    
+    captureSession.beginConfiguration()
+    captureSession.removeInput(currentInput)
+    
+    // Switches between front and back cameras when button is pressed
+    let newCameraDevice = currentInput.device.position == .back ? getCameraDevice(.front) : getCameraDevice(.back)
+    guard let newVideoInput = try? AVCaptureDeviceInput(device: newCameraDevice) else {
+      captureSession.commitConfiguration()
+      return
+    }
+    
+    if captureSession.canAddInput(newVideoInput) {
+      captureSession.addInput(newVideoInput)
+    } else {
+      captureSession.addInput(currentInput)
+    }
+    
+    captureSession.commitConfiguration()
+  }
+  
+  private func getCameraDevice(_ position: AVCaptureDevice.Position) -> AVCaptureDevice {
+    return AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: position) ?? AVCaptureDevice.default(for: .video)!
+  }
 }
-
