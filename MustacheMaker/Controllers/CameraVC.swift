@@ -5,41 +5,27 @@
 //  Created by Christopher Endress on 5/9/24.
 //
 
-import AVFoundation
+import ARKit
 import UIKit
 
-class CameraVC: UIViewController {
+class CameraVC: UIViewController, ARSCNViewDelegate {
   // UI variables
-  private var cameraPreviewView: UIView!
+  private var arSCNView: ARSCNView!
   private var startRecordingButton: UIButton!
   private var stopRecordingButton: UIButton!
   
   private let padding: CGFloat = 20
   
-  // Camera session variables
-  private var captureSession: AVCaptureSession!
-  private var videoOutput: AVCaptureVideoDataOutput!
-  private var previewLayer: AVCaptureVideoPreviewLayer!
-  
   override func viewDidLoad() {
     super.viewDidLoad()
     setupUI()
-    setupCameraSession()
+    setupARSession()
   }
-  
-  override func viewDidLayoutSubviews() {
-    super.viewDidLayoutSubviews()
-    previewLayer.frame = cameraPreviewView.bounds
-  }
-  
-  override func viewDidAppear(_ animated: Bool) {
-    showARView()
-  }
-  
-  //MARK: - Setup UI method
   
   private func setupUI() {
-    cameraPreviewView = UIView()
+    arSCNView = ARSCNView()
+    arSCNView.delegate = self
+    view.addSubview(arSCNView)
     
     startRecordingButton = UIButton()
     startRecordingButton.backgroundColor = .systemGreen
@@ -53,19 +39,18 @@ class CameraVC: UIViewController {
     stopRecordingButton.addTarget(self, action: #selector(stopRecording), for: .touchUpInside)
     stopRecordingButton.layer.cornerRadius = 25
     
-    view.addSubview(cameraPreviewView)
     view.addSubview(startRecordingButton)
     view.addSubview(stopRecordingButton)
     
-    cameraPreviewView.translatesAutoresizingMaskIntoConstraints = false
+    arSCNView.translatesAutoresizingMaskIntoConstraints = false
     startRecordingButton.translatesAutoresizingMaskIntoConstraints = false
     stopRecordingButton.translatesAutoresizingMaskIntoConstraints = false
     
     NSLayoutConstraint.activate([
-      cameraPreviewView.topAnchor.constraint(equalTo: view.topAnchor),
-      cameraPreviewView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-      cameraPreviewView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-      cameraPreviewView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+      arSCNView.topAnchor.constraint(equalTo: view.topAnchor),
+      arSCNView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+      arSCNView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+      arSCNView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
       
       startRecordingButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
       startRecordingButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding),
@@ -77,99 +62,42 @@ class CameraVC: UIViewController {
       stopRecordingButton.heightAnchor.constraint(equalToConstant: 50),
       stopRecordingButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -60)
     ])
-    
-    // Gesture recognizer for double-tap
-    let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleDoubleTap))
-    doubleTapGesture.numberOfTapsRequired = 2
-    cameraPreviewView.isUserInteractionEnabled = true
-    cameraPreviewView.addGestureRecognizer(doubleTapGesture)
   }
   
-  //MARK: - Video & AR methods
+  private func setupARSession() {
+    guard ARFaceTrackingConfiguration.isSupported else {
+      print("AR Face Tracking is not supported on this device.")
+      return
+    }
+    let configuration = ARFaceTrackingConfiguration()
+    arSCNView.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
+  }
   
   @objc private func startRecording() {
-    
+    // Start recording AR session or handle related functionality
   }
   
   @objc private func stopRecording() {
-    
+    // Stop recording AR session or handle related functionality
   }
   
-  private func showARView() {
-    let arVC = ARVC()
-    self.present(arVC, animated: true, completion: nil)
+  func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
+    guard let faceAnchor = anchor as? ARFaceAnchor else { return }
+    
+    DispatchQueue.main.async {
+      if node.childNode(withName: "mustache", recursively: false) == nil {
+        let mustacheNode = self.createMustacheNode()
+        node.addChildNode(mustacheNode)
+      }
+    }
   }
   
-  
-  //MARK: - Camera methods
-  
-  private func setupCameraSession() {
-    captureSession = AVCaptureSession()
-    captureSession.beginConfiguration()
-    
-    // Setup camera inputs:
-    
-    let initialCameraDevice = getCameraDevice(.front)
-    // Exit if the device's camera can't initialize video input from the camera
-    guard let videoInput = try? AVCaptureDeviceInput(device: initialCameraDevice) else { return }
-    
-    // If capture session can add the video input, add it
-    if captureSession.canAddInput(videoInput) {
-      captureSession.addInput(videoInput)
-    } else {
-      fatalError("Cannot add video input.")
-    }
-    
-    // Setup camera outputs:
-    
-    videoOutput = AVCaptureVideoDataOutput()
-    
-    // If capture session can add the video output, add it
-    if captureSession.canAddOutput(videoOutput) {
-      captureSession.addOutput(videoOutput)
-    } else {
-      fatalError("Cannot add video output.")
-    }
-    
-    // Setup preview layer:
-    
-    previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-    previewLayer.videoGravity = .resizeAspectFill
-    cameraPreviewView.layer.addSublayer(previewLayer)
-    
-    captureSession.commitConfiguration()
-    captureSession.startRunning()
-  }
-  
-  @objc private func flipCamera() {
-    guard let currentInput = captureSession.inputs.first as? AVCaptureDeviceInput else {
-      return
-    }
-    
-    captureSession.beginConfiguration()
-    captureSession.removeInput(currentInput)
-    
-    // Switches between front and back cameras when button is pressed
-    let newCameraDevice = currentInput.device.position == .back ? getCameraDevice(.front) : getCameraDevice(.back)
-    guard let newVideoInput = try? AVCaptureDeviceInput(device: newCameraDevice) else {
-      captureSession.commitConfiguration()
-      return
-    }
-    
-    if captureSession.canAddInput(newVideoInput) {
-      captureSession.addInput(newVideoInput)
-    } else {
-      captureSession.addInput(currentInput)
-    }
-    
-    captureSession.commitConfiguration()
-  }
-  
-  private func getCameraDevice(_ position: AVCaptureDevice.Position) -> AVCaptureDevice {
-    return AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: position) ?? AVCaptureDevice.default(for: .video)!
-  }
-  
-  @objc private func handleDoubleTap() {
-    flipCamera()
+  private func createMustacheNode() -> SCNNode {
+    let mustacheScene = SCNScene(named: "mustache.scn")!
+    let mustacheNode = mustacheScene.rootNode.childNodes.first!
+    mustacheNode.name = "mustache"
+    mustacheNode.position = SCNVector3(x: 0, y: 0.011, z: 0.07)
+    mustacheNode.scale = SCNVector3(0.002, 0.002, 0.002)
+    return mustacheNode
   }
 }

@@ -15,7 +15,6 @@
 		9DF430922BECEA3100F93A07 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 9DF430912BECEA3100F93A07 /* Base */; };
 		9DF4309B2BECEB4100F93A07 /* ARKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DF4309A2BECEB4100F93A07 /* ARKit.framework */; };
 		9DF4309D2BECEB4900F93A07 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DF4309C2BECEB4900F93A07 /* AVFoundation.framework */; };
-		9DF430CA2BED0CD100F93A07 /* ARVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF430C92BED0CD100F93A07 /* ARVC.swift */; };
 		9DF430D12BED1E6100F93A07 /* mustache.scn in Resources */ = {isa = PBXBuildFile; fileRef = 9DF430D02BED1E6100F93A07 /* mustache.scn */; };
 /* End PBXBuildFile section */
 
@@ -30,7 +29,6 @@
 		9DF430932BECEA3100F93A07 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9DF4309A2BECEB4100F93A07 /* ARKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ARKit.framework; path = System/Library/Frameworks/ARKit.framework; sourceTree = SDKROOT; };
 		9DF4309C2BECEB4900F93A07 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		9DF430C92BED0CD100F93A07 /* ARVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARVC.swift; sourceTree = "<group>"; };
 		9DF430D02BED1E6100F93A07 /* mustache.scn */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = mustache.scn; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -71,7 +69,7 @@
 				9DF430842BECEA2E00F93A07 /* SceneDelegate.swift */,
 				9DF430C22BED09DD00F93A07 /* Models */,
 				9DF430C12BED09C700F93A07 /* Controllers */,
-				9DF430CF2BED1C9300F93A07 /* mustache.scnassets */,
+				9DF430D02BED1E6100F93A07 /* mustache.scn */,
 				9DF4308E2BECEA3100F93A07 /* Assets.xcassets */,
 				9DF430902BECEA3100F93A07 /* LaunchScreen.storyboard */,
 				9DF430932BECEA3100F93A07 /* Info.plist */,
@@ -92,7 +90,6 @@
 			isa = PBXGroup;
 			children = (
 				9DF430862BECEA2E00F93A07 /* CameraVC.swift */,
-				9DF430C92BED0CD100F93A07 /* ARVC.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -103,14 +100,6 @@
 				9DF4308B2BECEA2E00F93A07 /* MustacheMaker.xcdatamodeld */,
 			);
 			path = Models;
-			sourceTree = "<group>";
-		};
-		9DF430CF2BED1C9300F93A07 /* mustache.scnassets */ = {
-			isa = PBXGroup;
-			children = (
-				9DF430D02BED1E6100F93A07 /* mustache.scn */,
-			);
-			path = mustache.scnassets;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -184,7 +173,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9DF430CA2BED0CD100F93A07 /* ARVC.swift in Sources */,
 				9DF4308D2BECEA2E00F93A07 /* MustacheMaker.xcdatamodeld in Sources */,
 				9DF430872BECEA2E00F93A07 /* CameraVC.swift in Sources */,
 				9DF430832BECEA2E00F93A07 /* AppDelegate.swift in Sources */,
