@@ -23,8 +23,8 @@ class CameraVC: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    
     setupUI()
+    setupCameraSession()
   }
   
   //MARK: - Setup UI method
@@ -70,7 +70,7 @@ class CameraVC: UIViewController {
     ])
   }
   
-  //MARK: - @Objc methods
+  //MARK: - Start and stop recording methods
   
   @objc private func startRecording() {
     
