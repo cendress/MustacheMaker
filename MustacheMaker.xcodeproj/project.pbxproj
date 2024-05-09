@@ -15,6 +15,7 @@
 		9DF430922BECEA3100F93A07 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 9DF430912BECEA3100F93A07 /* Base */; };
 		9DF4309B2BECEB4100F93A07 /* ARKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DF4309A2BECEB4100F93A07 /* ARKit.framework */; };
 		9DF4309D2BECEB4900F93A07 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DF4309C2BECEB4900F93A07 /* AVFoundation.framework */; };
+		9DF430CA2BED0CD100F93A07 /* ARVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF430C92BED0CD100F93A07 /* ARVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		9DF430932BECEA3100F93A07 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9DF4309A2BECEB4100F93A07 /* ARKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ARKit.framework; path = System/Library/Frameworks/ARKit.framework; sourceTree = SDKROOT; };
 		9DF4309C2BECEB4900F93A07 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		9DF430C92BED0CD100F93A07 /* ARVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +89,7 @@
 			isa = PBXGroup;
 			children = (
 				9DF430862BECEA2E00F93A07 /* CameraVC.swift */,
+				9DF430C92BED0CD100F93A07 /* ARVC.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -169,6 +172,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9DF430CA2BED0CD100F93A07 /* ARVC.swift in Sources */,
 				9DF4308D2BECEA2E00F93A07 /* MustacheMaker.xcdatamodeld in Sources */,
 				9DF430872BECEA2E00F93A07 /* CameraVC.swift in Sources */,
 				9DF430832BECEA2E00F93A07 /* AppDelegate.swift in Sources */,
