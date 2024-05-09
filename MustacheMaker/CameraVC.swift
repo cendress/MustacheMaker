@@ -17,9 +17,9 @@ class CameraVC: UIViewController {
   private let padding: CGFloat = 20
   
   // Camera session variables
-  var captureSession: AVCaptureSession!
-  var videoOutput: AVCaptureVideoDataOutput!
-  var previewLayer: AVCaptureVideoPreviewLayer!
+  private var captureSession: AVCaptureSession!
+  private var videoOutput: AVCaptureVideoDataOutput!
+  private var previewLayer: AVCaptureVideoPreviewLayer!
   
   override func viewDidLoad() {
     super.viewDidLoad()
