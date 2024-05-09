@@ -80,5 +80,40 @@ class CameraVC: UIViewController {
     
   }
   
+  //MARK: - Camera session method
+  
+  private func setupCameraSession() {
+    captureSession = AVCaptureSession()
+    captureSession.beginConfiguration()
+    
+    // Setup camera inputs:
+    
+    // Exit if the device's camera can't be accessed or can't initialize video input from the camera
+    guard let videoCaptureDevice = AVCaptureDevice.default(for: .video) else { return }
+    guard let videoInput = try? AVCaptureDeviceInput(device: videoCaptureDevice) else { return }
+    
+    // If capture session can add the video input, add it
+    if captureSession.canAddInput(videoInput) {
+      captureSession.addInput(videoInput)
+    } else {
+      fatalError("Cannot add video input.")
+    }
+    
+    // Setup camera outputs:
+    
+    videoOutput = AVCaptureVideoDataOutput()
+    
+    // If capture session can add the video output, add it
+    if captureSession.canAddOutput(videoOutput) {
+      captureSession.addOutput(videoOutput)
+    } else {
+      fatalError("Cannot add video output.")
+    }
+    
+    // Setup preview layer:
+    
+    
+  }
+  
 }
 
