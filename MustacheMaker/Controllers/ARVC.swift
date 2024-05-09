@@ -36,27 +36,31 @@ class ARVC: UIViewController, ARSCNViewDelegate {
     
     // Define the AR configuration as face tracking
     let configuration = ARFaceTrackingConfiguration()
+    
+    // Check if the device supports this configuration
+    guard ARFaceTrackingConfiguration.isSupported else {
+      print("AR Face Tracking is not supported on this device.")
+      return
+    }
+    
     // Run the session while resetting face tracking and any existing anchors
     arSCNView.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
   }
   
-  //MARK: - ARSCN view delegate method
+  //MARK: - Setup mustache methods
   
   // Called when AR anchor is being set
   func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
     guard let faceAnchor = anchor as? ARFaceAnchor else { return }
     
-    // Execute the following block on the main thread because it involves updating the UI
+    // Perform on the main thread since it updates the UI
     DispatchQueue.main.async {
-      // Check if a "mustache" node does not already exist to avoid duplicates
-      if self.arSCNView.scene.rootNode.childNode(withName: "mustache", recursively: false) == nil {
+      if node.childNode(withName: "mustache", recursively: false) == nil {
         let mustacheNode = self.createMustacheNode()
         node.addChildNode(mustacheNode)
       }
     }
   }
-  
-  //MARK: - Setup mustache
   
   private func createMustacheNode() -> SCNNode {
     let mustacheScene = SCNScene(named: "mustache.scnassets/mustache.scn")!
@@ -69,4 +73,5 @@ class ARVC: UIViewController, ARSCNViewDelegate {
     
     return mustacheNode
   }
+  
 }

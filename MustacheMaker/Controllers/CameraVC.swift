@@ -32,6 +32,10 @@ class CameraVC: UIViewController {
     previewLayer.frame = cameraPreviewView.bounds
   }
   
+  override func viewDidAppear(_ animated: Bool) {
+    showARView()
+  }
+  
   //MARK: - Setup UI method
   
   private func setupUI() {
