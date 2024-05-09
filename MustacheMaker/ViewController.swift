@@ -9,6 +9,9 @@ import AVFoundation
 import UIKit
 
 class ViewController: UIViewController {
+  var cameraPreviewView: UIView!
+  var startRecordingButton: UIButton!
+  var stopRecordingButton: UIButton!
 
   override func viewDidLoad() {
     super.viewDidLoad()
