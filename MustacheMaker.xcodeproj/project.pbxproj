@@ -16,6 +16,8 @@
 		9DF4309B2BECEB4100F93A07 /* ARKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DF4309A2BECEB4100F93A07 /* ARKit.framework */; };
 		9DF4309D2BECEB4900F93A07 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DF4309C2BECEB4900F93A07 /* AVFoundation.framework */; };
 		9DF430D12BED1E6100F93A07 /* mustache.scn in Resources */ = {isa = PBXBuildFile; fileRef = 9DF430D02BED1E6100F93A07 /* mustache.scn */; };
+		9DF430D72BEE72C300F93A07 /* RecordingListCollectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF430D62BEE72C300F93A07 /* RecordingListCollectionVC.swift */; };
+		9DF430D92BEE755100F93A07 /* RecordingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF430D82BEE755100F93A07 /* RecordingCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +32,8 @@
 		9DF4309A2BECEB4100F93A07 /* ARKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ARKit.framework; path = System/Library/Frameworks/ARKit.framework; sourceTree = SDKROOT; };
 		9DF4309C2BECEB4900F93A07 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		9DF430D02BED1E6100F93A07 /* mustache.scn */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = mustache.scn; sourceTree = "<group>"; };
+		9DF430D62BEE72C300F93A07 /* RecordingListCollectionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingListCollectionVC.swift; sourceTree = "<group>"; };
+		9DF430D82BEE755100F93A07 /* RecordingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +72,7 @@
 				9DF430822BECEA2E00F93A07 /* AppDelegate.swift */,
 				9DF430842BECEA2E00F93A07 /* SceneDelegate.swift */,
 				9DF430C22BED09DD00F93A07 /* Models */,
+				9DF430DA2BEE75B300F93A07 /* Views */,
 				9DF430C12BED09C700F93A07 /* Controllers */,
 				9DF430D02BED1E6100F93A07 /* mustache.scn */,
 				9DF4308E2BECEA3100F93A07 /* Assets.xcassets */,
@@ -90,6 +95,7 @@
 			isa = PBXGroup;
 			children = (
 				9DF430862BECEA2E00F93A07 /* CameraVC.swift */,
+				9DF430D62BEE72C300F93A07 /* RecordingListCollectionVC.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -100,6 +106,14 @@
 				9DF4308B2BECEA2E00F93A07 /* MustacheMaker.xcdatamodeld */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		9DF430DA2BEE75B300F93A07 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				9DF430D82BEE755100F93A07 /* RecordingCell.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -174,6 +188,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				9DF4308D2BECEA2E00F93A07 /* MustacheMaker.xcdatamodeld in Sources */,
+				9DF430D92BEE755100F93A07 /* RecordingCell.swift in Sources */,
+				9DF430D72BEE72C300F93A07 /* RecordingListCollectionVC.swift in Sources */,
 				9DF430872BECEA2E00F93A07 /* CameraVC.swift in Sources */,
 				9DF430832BECEA2E00F93A07 /* AppDelegate.swift in Sources */,
 				9DF430852BECEA2E00F93A07 /* SceneDelegate.swift in Sources */,

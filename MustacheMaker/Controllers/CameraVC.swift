@@ -96,7 +96,7 @@ class CameraVC: UIViewController, ARSCNViewDelegate, RPPreviewViewControllerDele
   //MARK: - Mustache creation methods
   
   func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
-    guard let faceAnchor = anchor as? ARFaceAnchor else { return }
+    guard anchor is ARFaceAnchor else { return }
     
     // Perform on main thread since it updates the UI
     DispatchQueue.main.async {
