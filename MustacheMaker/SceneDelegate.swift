@@ -35,15 +35,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     let appearance = UITabBarAppearance()
     appearance.configureWithOpaqueBackground()
     
-    appearance.backgroundColor = UIColor.systemBackground
-    appearance.shadowColor = UIColor.black
+    appearance.backgroundColor = .systemBackground
+    appearance.shadowColor = .black
     
     // Configure the normal state (unselected)
-    appearance.stackedLayoutAppearance.normal.iconColor = UIColor.systemGray
+    appearance.stackedLayoutAppearance.normal.iconColor = .systemGray
     appearance.stackedLayoutAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.systemGray]
     
     // Configure the selected state
-    appearance.stackedLayoutAppearance.selected.iconColor = UIColor.systemBlue
+    appearance.stackedLayoutAppearance.selected.iconColor = .systemBlue
     appearance.stackedLayoutAppearance.selected.titleTextAttributes = [.foregroundColor: UIColor.systemBlue]
     
     tabBarController.tabBar.standardAppearance = appearance
