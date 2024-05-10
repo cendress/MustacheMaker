@@ -166,7 +166,26 @@ class CameraVC: UIViewController, ARSCNViewDelegate, RPPreviewViewControllerDele
   //MARK: - Video recording methods
   
   @objc private func startRecording() {
-    // Start recording AR session
+    guard recorder.isAvailable else {
+      print("Recording is not available at this time.")
+      return
+    }
+    
+    recorder.startRecording { [weak self] (error) in
+      guard error == nil else {
+        print("There was an error starting the recording.")
+        return
+      }
+      
+      // Update UI here on main thread for recording
+      DispatchQueue.main.async {
+        self?.startRecordingButton.setTitle("Recording...".uppercased(), for: .normal)
+        self?.startRecordingButton.backgroundColor = .systemOrange
+        self?.startRecordingButton.isEnabled = false
+        self?.stopRecordingButton.isEnabled = true
+      }
+      print("Recording started successfully.")
+    }
   }
   
   @objc private func stopRecording() {
