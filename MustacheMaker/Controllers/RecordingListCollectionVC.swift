@@ -8,7 +8,7 @@
 import CoreData
 import UIKit
 
-class RecordingsListVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class RecordingsListCollectionVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
   var recordings: [NSManagedObject] = []
   
   init() {
@@ -21,6 +21,7 @@ class RecordingsListVC: UICollectionViewController, UICollectionViewDelegateFlow
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    navigationItem.title = "Recordings"
     collectionView.backgroundColor = .systemBackground
     collectionView.register(RecordingCell.self, forCellWithReuseIdentifier: RecordingCell.identifier)
     fetchRecordings()
