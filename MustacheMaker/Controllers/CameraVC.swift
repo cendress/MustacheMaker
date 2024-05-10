@@ -12,6 +12,7 @@ class CameraVC: UIViewController, ARSCNViewDelegate {
   private var arSCNView: ARSCNView!
   private var startRecordingButton: UIButton!
   private var stopRecordingButton: UIButton!
+  private var currentFaceNode: SCNNode?
   
   private let padding: CGFloat = 20
   
@@ -26,7 +27,11 @@ class CameraVC: UIViewController, ARSCNViewDelegate {
   private func setupUI() {
     arSCNView = ARSCNView()
     arSCNView.delegate = self
-    view.addSubview(arSCNView)
+    
+    // Might want to adjust names
+    let mustacheSelector = UISegmentedControl(items: ["Mustache_A", "Mustache_B", "Mustache_C", "Mustache_D"])
+    mustacheSelector.selectedSegmentIndex = 0
+    mustacheSelector.addTarget(self, action: #selector(handleMustacheChange(_:)), for: .valueChanged)
     
     startRecordingButton = UIButton()
     startRecordingButton.backgroundColor = .systemGreen
@@ -40,10 +45,13 @@ class CameraVC: UIViewController, ARSCNViewDelegate {
     stopRecordingButton.addTarget(self, action: #selector(stopRecording), for: .touchUpInside)
     stopRecordingButton.layer.cornerRadius = 25
     
+    view.addSubview(arSCNView)
+    view.addSubview(mustacheSelector)
     view.addSubview(startRecordingButton)
     view.addSubview(stopRecordingButton)
     
     arSCNView.translatesAutoresizingMaskIntoConstraints = false
+    mustacheSelector.translatesAutoresizingMaskIntoConstraints = false
     startRecordingButton.translatesAutoresizingMaskIntoConstraints = false
     stopRecordingButton.translatesAutoresizingMaskIntoConstraints = false
     
@@ -52,6 +60,10 @@ class CameraVC: UIViewController, ARSCNViewDelegate {
       arSCNView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
       arSCNView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
       arSCNView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+      
+      mustacheSelector.bottomAnchor.constraint(equalTo: startRecordingButton.topAnchor, constant: -padding),
+      mustacheSelector.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
+      mustacheSelector.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding),
       
       startRecordingButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
       startRecordingButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding),
@@ -82,23 +94,38 @@ class CameraVC: UIViewController, ARSCNViewDelegate {
   //MARK: - Mustache creation methods
   
   func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
-    guard anchor is ARFaceAnchor else { return }
+    guard let faceAnchor = anchor as? ARFaceAnchor else { return }
     
-    // Perform on main thread since it updates the UI
     DispatchQueue.main.async {
-      self.addMustache(to: node)  
+      self.currentFaceNode = node
+      self.addMustache(to: node, style: "Classic")
     }
   }
   
-  func addMustache(to node: SCNNode) {
-    // Each node is only 1/2 of a mustache
-    let mustacheNames = ["Moustache_D_Left", "Moustache_D_Right"]
+  private func addMustache(to node: SCNNode, style: String) {
+    let mustacheNames: [String]
+    
+    // Use switch statement on mustache style for simplicity and in case more mustaches were added
+    switch style {
+    case "Mustache_A":
+      mustacheNames = ["Moustache_A_Left", "Moustache_A_Right"]
+    case "Mustache_B":
+      mustacheNames = ["Moustache_B_Left", "Moustache_B_Right"]
+    case "Mustache_C":
+      mustacheNames = ["Moustache_C_Left", "Moustache_C_Right"]
+    case "Mustache_D":
+      mustacheNames = ["Moustache_D_Left", "Moustache_D_Right"]
+    default:
+      mustacheNames = []
+      print("No valid mustache style selected. Provided style: \(style)")
+    }
+    
     for name in mustacheNames {
       if let mustacheNode = createMustacheNode(named: name) {
-        // Sets positioning of node if it left or right. If left, the x value will be negative.
+        // Each node is only 1/2 of mustache
         mustacheNode.position = SCNVector3(x: (name.contains("Left") ? -1 : 1) * 0.0215, y: -0.0275, z: 0.07)
         mustacheNode.scale = SCNVector3(x: 0.05, y: 0.2, z: 0.2)
-
+        mustacheNode.name = "Mustache"
         node.addChildNode(mustacheNode)
       }
     }
@@ -108,10 +135,32 @@ class CameraVC: UIViewController, ARSCNViewDelegate {
   private func createMustacheNode(named nodeName: String) -> SCNNode? {
     guard let mustacheScene = SCNScene(named: "mustache.scn"),
           let mustacheNode = mustacheScene.rootNode.childNode(withName: nodeName, recursively: true) else {
-      print("Failed to load the node: \(nodeName)")
+      NSLog("Failed to load the node: \(nodeName) from mustache.scn")
       return nil
     }
     return mustacheNode
+  }
+  
+  //MARK: - Select mustache methods
+  
+  @objc private func handleMustacheChange(_ sender: UISegmentedControl) {
+    let selectedIndex = sender.selectedSegmentIndex
+    let mustacheStyle = sender.titleForSegment(at: selectedIndex) ?? "Mustache_A"
+    
+    updateMustache(style: mustacheStyle)
+  }
+  
+  private func updateMustache(style: String) {
+    guard let faceNode = currentFaceNode else { return }
+    
+    // Remove existing mustache nodes
+    faceNode.enumerateChildNodes { (node, stop) in
+      if node.name?.contains("Mustache") ?? false {
+        node.removeFromParentNode()
+      }
+    }
+    
+    addMustache(to: faceNode, style: style)
   }
   
   //MARK: - Video recording methods
