@@ -14,6 +14,7 @@ class CameraVC: UIViewController, ARSCNViewDelegate, RPPreviewViewControllerDele
   private var startRecordingButton: UIButton!
   private var stopRecordingButton: UIButton!
   private var currentFaceNode: SCNNode?
+  private let recorder = RPScreenRecorder.shared()
   
   private let padding: CGFloat = 20
   
