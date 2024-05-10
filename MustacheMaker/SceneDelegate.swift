@@ -22,8 +22,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     let cameraVC = CameraVC()
     cameraVC.tabBarItem = UITabBarItem(title: nil, image: UIImage(systemName: "camera"), tag: 0)
     
+    let recordingListVC = RecordingListVC()
+    recordingListVC.tabBarItem = UITabBarItem(title: nil, image: UIImage(systemName: "list.bullet"), tag: 1)
+    
     let tabBarVC = UITabBarController()
-    tabBarVC.viewControllers = [cameraVC]
+    tabBarVC.viewControllers = [cameraVC, recordingListVC]
     
     window.rootViewController = tabBarVC
     self.window = window
