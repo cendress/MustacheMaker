@@ -9,7 +9,7 @@ import ARKit
 import ReplayKit
 import UIKit
 
-class CameraVC: UIViewController, ARSCNViewDelegate {
+class CameraVC: UIViewController, ARSCNViewDelegate, RPPreviewViewControllerDelegate {
   private var arSCNView: ARSCNView!
   private var startRecordingButton: UIButton!
   private var stopRecordingButton: UIButton!
