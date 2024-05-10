@@ -13,24 +13,42 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
   
   
   func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-    // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
-    // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
-    // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
     guard let windowScene = (scene as? UIWindowScene) else { return }
     let window = UIWindow(windowScene: windowScene)
     
     let cameraVC = CameraVC()
-    cameraVC.tabBarItem = UITabBarItem(title: nil, image: UIImage(systemName: "camera"), tag: 0)
+    cameraVC.tabBarItem = UITabBarItem(title: "Camera", image: UIImage(systemName: "camera.fill"), tag: 0)
     
     let recordingListVC = RecordingListVC()
-    recordingListVC.tabBarItem = UITabBarItem(title: nil, image: UIImage(systemName: "list.bullet"), tag: 1)
+    recordingListVC.tabBarItem = UITabBarItem(title: "Recordings", image: UIImage(systemName: "list.bullet"), tag: 1)
     
     let tabBarVC = UITabBarController()
+    configureTabBarAppearance(for: tabBarVC)
     tabBarVC.viewControllers = [cameraVC, recordingListVC]
     
     window.rootViewController = tabBarVC
     self.window = window
     window.makeKeyAndVisible()
+  }
+  
+  private func configureTabBarAppearance(for tabBarController: UITabBarController) {
+    let appearance = UITabBarAppearance()
+    appearance.configureWithOpaqueBackground()
+    
+    appearance.backgroundColor = UIColor.systemBackground
+    appearance.shadowColor = UIColor.black
+    
+    // Configure the normal state (unselected)
+    appearance.stackedLayoutAppearance.normal.iconColor = UIColor.systemGray
+    appearance.stackedLayoutAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.systemGray]
+    
+    // Configure the selected state
+    appearance.stackedLayoutAppearance.selected.iconColor = UIColor.systemBlue
+    appearance.stackedLayoutAppearance.selected.titleTextAttributes = [.foregroundColor: UIColor.systemBlue]
+    
+    tabBarController.tabBar.standardAppearance = appearance
+    // Important for iOS 15 and later
+    tabBarController.tabBar.scrollEdgeAppearance = appearance
   }
   
   func sceneDidDisconnect(_ scene: UIScene) {
