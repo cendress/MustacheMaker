@@ -16,7 +16,6 @@
 		9DF4309B2BECEB4100F93A07 /* ARKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DF4309A2BECEB4100F93A07 /* ARKit.framework */; };
 		9DF4309D2BECEB4900F93A07 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DF4309C2BECEB4900F93A07 /* AVFoundation.framework */; };
 		9DF430D12BED1E6100F93A07 /* mustache.scn in Resources */ = {isa = PBXBuildFile; fileRef = 9DF430D02BED1E6100F93A07 /* mustache.scn */; };
-		9DF430D32BEE411900F93A07 /* RecordingListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF430D22BEE411900F93A07 /* RecordingListVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,7 +30,6 @@
 		9DF4309A2BECEB4100F93A07 /* ARKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ARKit.framework; path = System/Library/Frameworks/ARKit.framework; sourceTree = SDKROOT; };
 		9DF4309C2BECEB4900F93A07 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		9DF430D02BED1E6100F93A07 /* mustache.scn */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = mustache.scn; sourceTree = "<group>"; };
-		9DF430D22BEE411900F93A07 /* RecordingListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingListVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,7 +90,6 @@
 			isa = PBXGroup;
 			children = (
 				9DF430862BECEA2E00F93A07 /* CameraVC.swift */,
-				9DF430D22BEE411900F93A07 /* RecordingListVC.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -179,7 +176,6 @@
 				9DF4308D2BECEA2E00F93A07 /* MustacheMaker.xcdatamodeld in Sources */,
 				9DF430872BECEA2E00F93A07 /* CameraVC.swift in Sources */,
 				9DF430832BECEA2E00F93A07 /* AppDelegate.swift in Sources */,
-				9DF430D32BEE411900F93A07 /* RecordingListVC.swift in Sources */,
 				9DF430852BECEA2E00F93A07 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

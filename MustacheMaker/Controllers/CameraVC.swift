@@ -6,6 +6,7 @@
 //
 
 import ARKit
+import CoreData
 import ReplayKit
 import UIKit
 
@@ -234,7 +235,26 @@ class CameraVC: UIViewController, ARSCNViewDelegate, RPPreviewViewControllerDele
     self.present(ac, animated: true, completion: nil)
   }
   
+  //MARK: - Data persistence
+  
   private func saveRecording(tag: String, previewController: RPPreviewViewController) {
-    print("Recording saved with tag: \(tag)")
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      print("Could not get AppDelegate")
+      return
+    }
+    
+    let context = appDelegate.persistentContainer.viewContext
+    let newRecording = NSEntityDescription.insertNewObject(forEntityName: "Recording", into: context)
+    
+    newRecording.setValue(tag, forKey: "tag")
+//    newRecording.setValue(120.0, forKey: "duration")
+//    newRecording.setValue("video file path", forKey: "videoURL")
+    
+    do {
+      try context.save()
+      print("Recording saved successfully with tag: \(tag)")
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
   }
 }
