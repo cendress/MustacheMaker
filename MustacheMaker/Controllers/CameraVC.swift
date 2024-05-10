@@ -189,6 +189,27 @@ class CameraVC: UIViewController, ARSCNViewDelegate, RPPreviewViewControllerDele
   }
   
   @objc private func stopRecording() {
-    // Stop recording AR session
+    recorder.stopRecording { [weak self] (previewViewController, error) in
+      guard let self = self else { return }
+      
+      DispatchQueue.main.async {
+        if let previewVC = previewViewController {
+          previewVC.previewControllerDelegate = self
+          self.present(previewVC, animated: true, completion: nil)
+        }
+        
+        // Update UI to reflect that recording has stopped
+        self.startRecordingButton.setTitle("Start Recording".uppercased(), for: .normal)
+        self.startRecordingButton.backgroundColor = .systemGreen
+        self.startRecordingButton.isEnabled = true
+        self.stopRecordingButton.isEnabled = false
+      }
+      
+      if let error = error {
+        print("Stopping recording failed: \(error)")
+        return
+      }
+      print("Recording stopped successfully.")
+    }
   }
 }
