@@ -30,7 +30,6 @@ class CameraVC: UIViewController, ARSCNViewDelegate {
     
     // Might want to adjust names
     let mustacheSelector = UISegmentedControl(items: ["Mustache_A", "Mustache_B", "Mustache_C", "Mustache_D"])
-    mustacheSelector.selectedSegmentIndex = 0
     mustacheSelector.addTarget(self, action: #selector(handleMustacheChange(_:)), for: .valueChanged)
     
     startRecordingButton = UIButton()
@@ -105,7 +104,7 @@ class CameraVC: UIViewController, ARSCNViewDelegate {
   private func addMustache(to node: SCNNode, style: String) {
     let mustacheNames: [String]
     
-    // Use switch statement on mustache style for simplicity and in case more mustaches were added
+    // Use switch statement on mustache style for simplicity and in case more mustaches are added
     switch style {
     case "Mustache_A":
       mustacheNames = ["Moustache_A_Left", "Moustache_A_Right"]
