@@ -123,7 +123,7 @@ class CameraVC: UIViewController, ARSCNViewDelegate, RPPreviewViewControllerDele
     for name in mustacheNames {
       if let mustacheNode = createMustacheNode(named: name) {
         // Each node is only 1/2 of mustache
-        mustacheNode.position = SCNVector3(x: (name.contains("Left") ? -1 : 1) * 0.0215, y: -0.03, z: 0.05)
+        mustacheNode.position = SCNVector3(x: (name.contains("Left") ? -1 : 1) * 0.0215, y: -0.03, z: 0.06)
         mustacheNode.scale = SCNVector3(x: 0.02, y: 0.15, z: 0.2)
         mustacheNode.name = "Mustache"
         node.addChildNode(mustacheNode)
