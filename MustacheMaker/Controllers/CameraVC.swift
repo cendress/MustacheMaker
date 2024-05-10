@@ -69,7 +69,7 @@ class CameraVC: UIViewController, ARSCNViewDelegate, RPPreviewViewControllerDele
       startRecordingButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
       startRecordingButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding),
       startRecordingButton.heightAnchor.constraint(equalToConstant: 50),
-      startRecordingButton.bottomAnchor.constraint(equalTo: stopRecordingButton.topAnchor, constant: -20),
+      startRecordingButton.bottomAnchor.constraint(equalTo: stopRecordingButton.topAnchor, constant: -padding),
       
       stopRecordingButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
       stopRecordingButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding),
