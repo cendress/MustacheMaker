@@ -6,6 +6,7 @@
 //
 
 import ARKit
+import ReplayKit
 import UIKit
 
 class CameraVC: UIViewController, ARSCNViewDelegate {
@@ -95,9 +96,10 @@ class CameraVC: UIViewController, ARSCNViewDelegate {
   func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
     guard let faceAnchor = anchor as? ARFaceAnchor else { return }
     
+    // Perform on main thread since it updates the UI
     DispatchQueue.main.async {
       self.currentFaceNode = node
-      self.addMustache(to: node, style: "Mustache_A")
+      self.addMustache(to: node, style: "Twirly")
     }
   }
   
