@@ -72,7 +72,7 @@ class CameraVC: UIViewController, ARSCNViewDelegate {
       stopRecordingButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
       stopRecordingButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding),
       stopRecordingButton.heightAnchor.constraint(equalToConstant: 50),
-      stopRecordingButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -60)
+      stopRecordingButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -30)
     ])
   }
   
@@ -97,7 +97,7 @@ class CameraVC: UIViewController, ARSCNViewDelegate {
     
     DispatchQueue.main.async {
       self.currentFaceNode = node
-      self.addMustache(to: node, style: "Classic")
+      self.addMustache(to: node, style: "Mustache_A")
     }
   }
   
