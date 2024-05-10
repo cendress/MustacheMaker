@@ -189,27 +189,52 @@ class CameraVC: UIViewController, ARSCNViewDelegate, RPPreviewViewControllerDele
   }
   
   @objc private func stopRecording() {
-    recorder.stopRecording { [weak self] (previewViewController, error) in
-      guard let self = self else { return }
-      
-      DispatchQueue.main.async {
-        if let previewVC = previewViewController {
-          previewVC.previewControllerDelegate = self
-          self.present(previewVC, animated: true, completion: nil)
-        }
-        
-        // Update UI to reflect that recording has stopped
-        self.startRecordingButton.setTitle("Start Recording".uppercased(), for: .normal)
-        self.startRecordingButton.backgroundColor = .systemGreen
-        self.startRecordingButton.isEnabled = true
-        self.stopRecordingButton.isEnabled = false
-      }
-      
-      if let error = error {
-        print("Stopping recording failed: \(error)")
+    guard recorder.isRecording else {
+      print("No recording is currently active.")
+      return
+    }
+    
+    recorder.stopRecording { [weak self] (previewController, error) in
+      guard let previewController = previewController, error == nil else {
+        print("There was an error stopping the recording.")
         return
       }
-      print("Recording stopped successfully.")
+      
+      // Update UI to reflect that recording has stopped
+      DispatchQueue.main.async {
+        self?.startRecordingButton.isEnabled = true
+        self?.stopRecordingButton.isEnabled = false
+        
+        self?.startRecordingButton.setTitle("Start Recording".uppercased(), for: .normal)
+        self?.startRecordingButton.backgroundColor = .systemGreen
+        
+        self?.presentTagInput(previewController: previewController)
+      }
     }
+  }
+  
+  private func presentTagInput(previewController: RPPreviewViewController) {
+    let ac = UIAlertController(title: "Tag Recording", message: "Enter a tag for your recording:", preferredStyle: .alert)
+    
+    ac.addTextField { textField in
+      textField.placeholder = "Tag"
+    }
+    
+    let saveAction = UIAlertAction(title: "Save", style: .default) { [weak self, weak ac] _ in
+      guard let textField = ac?.textFields?.first, let tag = textField.text else { return }
+      // Now handle saving the recording with the tag
+      self?.saveRecording(tag: tag, previewController: previewController)
+    }
+    
+    let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+    
+    ac.addAction(saveAction)
+    ac.addAction(cancelAction)
+    
+    self.present(ac, animated: true, completion: nil)
+  }
+  
+  private func saveRecording(tag: String, previewController: RPPreviewViewController) {
+    print("Recording saved with tag: \(tag)")
   }
 }
