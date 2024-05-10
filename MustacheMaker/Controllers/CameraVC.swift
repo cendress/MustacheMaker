@@ -29,7 +29,7 @@ class CameraVC: UIViewController, ARSCNViewDelegate {
     arSCNView.delegate = self
     
     // Might want to adjust names
-    let mustacheSelector = UISegmentedControl(items: ["Mustache_A", "Mustache_B", "Mustache_C", "Mustache_D"])
+    let mustacheSelector = UISegmentedControl(items: ["Mustache_A", "Mustache_C", "Mustache_D"])
     mustacheSelector.addTarget(self, action: #selector(handleMustacheChange(_:)), for: .valueChanged)
     
     startRecordingButton = UIButton()
@@ -108,8 +108,6 @@ class CameraVC: UIViewController, ARSCNViewDelegate {
     switch style {
     case "Mustache_A":
       mustacheNames = ["Moustache_A_Left", "Moustache_A_Right"]
-    case "Mustache_B":
-      mustacheNames = ["Moustache_B_Left", "Moustache_B_Right"]
     case "Mustache_C":
       mustacheNames = ["Moustache_C_Left", "Moustache_C_Right"]
     case "Mustache_D":
@@ -122,7 +120,7 @@ class CameraVC: UIViewController, ARSCNViewDelegate {
     for name in mustacheNames {
       if let mustacheNode = createMustacheNode(named: name) {
         // Each node is only 1/2 of mustache
-        mustacheNode.position = SCNVector3(x: (name.contains("Left") ? -1 : 1) * 0.0215, y: -0.0275, z: 0.07)
+        mustacheNode.position = SCNVector3(x: (name.contains("Left") ? -1 : 1) * 0.0215, y: -0.03, z: 0.05)
         mustacheNode.scale = SCNVector3(x: 0.05, y: 0.2, z: 0.2)
         mustacheNode.name = "Mustache"
         node.addChildNode(mustacheNode)
