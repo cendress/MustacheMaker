@@ -90,29 +90,28 @@ class CameraVC: UIViewController, ARSCNViewDelegate {
   
   func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
     guard anchor is ARFaceAnchor else { return }
-
-    // Perform on main thread since it updates the UI
+    
     DispatchQueue.main.async {
-      // Ensure there are no duplicate mustaches
-      if node.childNode(withName: "mustache", recursively: false) == nil {
-        let mustacheNode = self.createMustacheNode()
+      self.addMustache(to: node)  
+    }
+  }
+  
+  func addMustache(to node: SCNNode) {
+    let mustacheNames = ["Moustache_D_Left", "Moustache_D_Right"]
+    for name in mustacheNames {
+      if let mustacheNode = createMustacheNode(named: name) {
+        mustacheNode.position = SCNVector3(x: (name.contains("Left") ? -1 : 1) * 0.0275, y: -0.0275, z: 0.07)
         node.addChildNode(mustacheNode)
-        
-        // May need adjusting
-        mustacheNode.position = SCNVector3(x: 0, y: -0.0275, z: 0.07)
-        mustacheNode.scale = SCNVector3(0.13, 0.13, 0.13)
-      } else {
-        if let existingNode = node.childNode(withName: "mustache", recursively: false) {
-          print("Mustache already exists at position \(existingNode.position), scale: \(existingNode.scale)")
-        }
       }
     }
   }
   
-  private func createMustacheNode() -> SCNNode {
-    let mustacheScene = SCNScene(named: "mustache.scn")!
-    let mustacheNode = mustacheScene.rootNode.childNodes.first!
-    mustacheNode.name = "mustache"
+  private func createMustacheNode(named nodeName: String) -> SCNNode? {
+    guard let mustacheScene = SCNScene(named: "mustache.scn"),
+          let mustacheNode = mustacheScene.rootNode.childNode(withName: nodeName, recursively: true) else {
+      print("Failed to load the node: \(nodeName)")
+      return nil
+    }
     return mustacheNode
   }
 }
