@@ -96,6 +96,7 @@ class RecordingCell: UICollectionViewCell {
       let assetImgGenerate = AVAssetImageGenerator(asset: asset)
       assetImgGenerate.appliesPreferredTrackTransform = true
       let time = CMTimeMakeWithSeconds(1.0, preferredTimescale: 600)
+      
       do {
         let img = try assetImgGenerate.copyCGImage(at: time, actualTime: nil)
         let thumbnail = UIImage(cgImage: img)

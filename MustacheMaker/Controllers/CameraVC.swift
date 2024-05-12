@@ -16,6 +16,7 @@ class CameraVC: UIViewController, ARSCNViewDelegate, RPPreviewViewControllerDele
   private var stopRecordingButton: UIButton!
   private var currentFaceNode: SCNNode?
   private let recorder = RPScreenRecorder.shared()
+  private var recordingStartTime: Date?
   
   private let padding: CGFloat = 20
   
@@ -33,6 +34,7 @@ class CameraVC: UIViewController, ARSCNViewDelegate, RPPreviewViewControllerDele
     
     // Might want to adjust names
     let mustacheSelector = UISegmentedControl(items: ["Twirly", "Classic", "Thin"])
+    mustacheSelector.selectedSegmentIndex = 0
     mustacheSelector.addTarget(self, action: #selector(handleMustacheChange(_:)), for: .valueChanged)
     
     startRecordingButton = UIButton()
@@ -178,9 +180,10 @@ class CameraVC: UIViewController, ARSCNViewDelegate, RPPreviewViewControllerDele
         return
       }
       
-      // Update UI here on main thread for recording
+      self?.recordingStartTime = Date()
+      
       DispatchQueue.main.async {
-        self?.startRecordingButton.setTitle("Recording...".uppercased(), for: .normal)
+        self?.startRecordingButton.setTitle("Recording...", for: .normal)
         self?.startRecordingButton.backgroundColor = .systemOrange
         self?.startRecordingButton.isEnabled = false
         self?.stopRecordingButton.isEnabled = true
@@ -195,26 +198,28 @@ class CameraVC: UIViewController, ARSCNViewDelegate, RPPreviewViewControllerDele
       return
     }
     
+    let startTime = recordingStartTime ?? Date()
+    let endTime = Date()
+    
     recorder.stopRecording { [weak self] (previewController, error) in
       guard let previewController = previewController, error == nil else {
         print("There was an error stopping the recording.")
         return
       }
       
-      // Update UI to reflect that recording has stopped
+      let duration = endTime.timeIntervalSince(startTime)
+      
       DispatchQueue.main.async {
         self?.startRecordingButton.isEnabled = true
         self?.stopRecordingButton.isEnabled = false
-        
-        self?.startRecordingButton.setTitle("Start Recording".uppercased(), for: .normal)
+        self?.startRecordingButton.setTitle("Start Recording", for: .normal)
         self?.startRecordingButton.backgroundColor = .systemGreen
-        
-        self?.presentTagInput(previewController: previewController)
+        self?.presentTagInput(previewController: previewController, duration: duration)
       }
     }
   }
   
-  private func presentTagInput(previewController: RPPreviewViewController) {
+  private func presentTagInput(previewController: RPPreviewViewController, duration: TimeInterval) {
     let ac = UIAlertController(title: "Tag Recording", message: "Enter a tag for your recording:", preferredStyle: .alert)
     
     ac.addTextField { textField in
@@ -223,8 +228,8 @@ class CameraVC: UIViewController, ARSCNViewDelegate, RPPreviewViewControllerDele
     
     let saveAction = UIAlertAction(title: "Save", style: .default) { [weak self, weak ac] _ in
       guard let textField = ac?.textFields?.first, let tag = textField.text else { return }
-      // Now handle saving the recording with the tag
-      self?.saveRecording(tag: tag, previewController: previewController)
+      // Now handle saving the recording with the tag and duration
+      self?.saveRecording(tag: tag, duration: duration, previewController: previewController)
     }
     
     let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
@@ -237,7 +242,7 @@ class CameraVC: UIViewController, ARSCNViewDelegate, RPPreviewViewControllerDele
   
   //MARK: - Data persistence
   
-  private func saveRecording(tag: String, previewController: RPPreviewViewController) {
+  private func saveRecording(tag: String, duration: TimeInterval, previewController: RPPreviewViewController) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       print("Could not get AppDelegate")
       return
@@ -247,12 +252,11 @@ class CameraVC: UIViewController, ARSCNViewDelegate, RPPreviewViewControllerDele
     let newRecording = NSEntityDescription.insertNewObject(forEntityName: "Recording", into: context)
     
     newRecording.setValue(tag, forKey: "tag")
-//    newRecording.setValue(120.0, forKey: "duration")
-//    newRecording.setValue("video file path", forKey: "videoURL")
+    newRecording.setValue(duration, forKey: "duration")
     
     do {
       try context.save()
-      print("Recording saved successfully with tag: \(tag)")
+      print("Recording saved successfully with tag: \(tag) and duration: \(duration)")
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
     }
