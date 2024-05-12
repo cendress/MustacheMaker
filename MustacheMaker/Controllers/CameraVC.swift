@@ -224,6 +224,8 @@ class CameraVC: UIViewController, ARSCNViewDelegate, RPPreviewViewControllerDele
     
     ac.addTextField { textField in
       textField.placeholder = "Tag"
+      // Set the capitalization type to capitalize each word.
+      textField.autocapitalizationType = .words
     }
     
     let saveAction = UIAlertAction(title: "Save", style: .default) { [weak self, weak ac] _ in
