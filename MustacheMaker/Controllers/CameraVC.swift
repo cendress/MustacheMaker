@@ -259,6 +259,9 @@ class CameraVC: UIViewController, ARSCNViewDelegate, RPPreviewViewControllerDele
     do {
       try context.save()
       print("Recording saved successfully with tag: \(tag) and duration: \(duration)")
+      DispatchQueue.main.async {
+        NotificationCenter.default.post(name: NSNotification.Name("NewRecordingSaved"), object: nil)
+      }
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
     }

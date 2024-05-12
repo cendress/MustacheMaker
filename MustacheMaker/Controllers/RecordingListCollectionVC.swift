@@ -31,6 +31,12 @@ class RecordingsListCollectionVC: UICollectionViewController, UICollectionViewDe
     collectionView.backgroundColor = .systemBackground
     collectionView.register(RecordingCell.self, forCellWithReuseIdentifier: RecordingCell.identifier)
     fetchRecordings()
+    
+    NotificationCenter.default.addObserver(self, selector: #selector(fetchRecordings), name: NSNotification.Name("NewRecordingSaved"), object: nil)
+  }
+  
+  deinit {
+    NotificationCenter.default.removeObserver(self)
   }
   
   //MARK: - Collection view delegate & data source methods
@@ -61,7 +67,7 @@ class RecordingsListCollectionVC: UICollectionViewController, UICollectionViewDe
   
   //MARK: - Fetch data method
   
-  private func fetchRecordings() {
+  @objc private func fetchRecordings() {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
