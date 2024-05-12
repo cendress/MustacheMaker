@@ -85,7 +85,7 @@ class RecordingCell: UICollectionViewCell {
   private func formatDuration(_ duration: Double) -> String {
     let formatter = DateComponentsFormatter()
     formatter.unitsStyle = .positional
-    formatter.allowedUnits = [.hour, .minute]
+    formatter.allowedUnits = [.minute, .second]
     formatter.zeroFormattingBehavior = [.pad]
     return formatter.string(from: TimeInterval(duration)) ?? ""
   }

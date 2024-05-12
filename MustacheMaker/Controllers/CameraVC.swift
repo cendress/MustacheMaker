@@ -183,7 +183,7 @@ class CameraVC: UIViewController, ARSCNViewDelegate, RPPreviewViewControllerDele
       self?.recordingStartTime = Date()
       
       DispatchQueue.main.async {
-        self?.startRecordingButton.setTitle("Recording...", for: .normal)
+        self?.startRecordingButton.setTitle("Recording...".uppercased(), for: .normal)
         self?.startRecordingButton.backgroundColor = .systemOrange
         self?.startRecordingButton.isEnabled = false
         self?.stopRecordingButton.isEnabled = true
@@ -212,7 +212,7 @@ class CameraVC: UIViewController, ARSCNViewDelegate, RPPreviewViewControllerDele
       DispatchQueue.main.async {
         self?.startRecordingButton.isEnabled = true
         self?.stopRecordingButton.isEnabled = false
-        self?.startRecordingButton.setTitle("Start Recording", for: .normal)
+        self?.startRecordingButton.setTitle("Start Recording".uppercased(), for: .normal)
         self?.startRecordingButton.backgroundColor = .systemGreen
         self?.presentTagInput(previewController: previewController, duration: duration)
       }

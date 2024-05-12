@@ -48,8 +48,12 @@ class RecordingsListCollectionVC: UICollectionViewController, UICollectionViewDe
   }
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-    // May need tweaking
-    return CGSize(width: collectionView.bounds.width / 3 - 10, height: 150)
+    let layout = collectionViewLayout as! UICollectionViewFlowLayout
+    
+    let numberOfColumns: CGFloat = 2
+    let totalSpacing = layout.sectionInset.left + layout.sectionInset.right + (layout.minimumInteritemSpacing * (numberOfColumns - 1))
+    let adjustedWidth = (collectionView.bounds.width - totalSpacing) / numberOfColumns
+    return CGSize(width: adjustedWidth, height: 150)
   }
   
   //MARK: - Fetch data method
