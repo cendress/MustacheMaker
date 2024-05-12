@@ -224,7 +224,7 @@ class CameraVC: UIViewController, ARSCNViewDelegate, RPPreviewViewControllerDele
     
     ac.addTextField { textField in
       textField.placeholder = "Tag"
-      // Set the capitalization type to capitalize each word.
+      // Set the capitalization type to capitalize each word
       textField.autocapitalizationType = .words
     }
     
