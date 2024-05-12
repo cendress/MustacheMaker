@@ -23,6 +23,7 @@ class RecordingsListCollectionVC: UICollectionViewController, UICollectionViewDe
     super.viewDidLoad()
     navigationItem.title = "Recordings"
     navigationController?.navigationBar.prefersLargeTitles = true
+    
     collectionView.backgroundColor = .systemBackground
     collectionView.register(RecordingCell.self, forCellWithReuseIdentifier: RecordingCell.identifier)
     fetchRecordings()
