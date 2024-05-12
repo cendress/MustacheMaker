@@ -65,6 +65,46 @@ class RecordingsListCollectionVC: UICollectionViewController, UICollectionViewDe
     return CGSize(width: adjustedWidth, height: 150)
   }
   
+  override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    let recording = recordings[indexPath.row]
+    let alertController = UIAlertController(title: "Edit Tag", message: "Enter a new tag:", preferredStyle: .alert)
+    alertController.addTextField { textField in
+      textField.text = recording.value(forKey: "tag") as? String
+    }
+    
+    let saveAction = UIAlertAction(title: "Save", style: .default) { [weak self] _ in
+      guard let textField = alertController.textFields?.first, let newTag = textField.text else { return }
+      self?.updateTag(for: recording, newTag: newTag, at: indexPath)
+    }
+    
+    let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+    alertController.addAction(saveAction)
+    alertController.addAction(cancelAction)
+    
+    present(alertController, animated: true)
+  }
+  
+  //MARK: - Update tag
+  
+  private func updateTag(for recording: NSManagedObject, newTag: String, at indexPath: IndexPath) {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      print("Could not get AppDelegate")
+      return
+    }
+    
+    let context = appDelegate.persistentContainer.viewContext
+    recording.setValue(newTag, forKey: "tag")
+    
+    do {
+      try context.save()
+      print("Tag updated successfully: \(newTag)")
+      collectionView.reloadItems(at: [indexPath])
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
+    }
+  }
+  
+  
   //MARK: - Fetch data method
   
   @objc private func fetchRecordings() {
