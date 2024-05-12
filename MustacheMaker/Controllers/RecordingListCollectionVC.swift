@@ -70,6 +70,7 @@ class RecordingsListCollectionVC: UICollectionViewController, UICollectionViewDe
     let alertController = UIAlertController(title: "Edit Tag", message: "Enter a new tag:", preferredStyle: .alert)
     alertController.addTextField { textField in
       textField.text = recording.value(forKey: "tag") as? String
+      textField.autocapitalizationType = .words
     }
     
     let saveAction = UIAlertAction(title: "Save", style: .default) { [weak self] _ in
