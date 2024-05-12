@@ -12,7 +12,11 @@ class RecordingsListCollectionVC: UICollectionViewController, UICollectionViewDe
   var recordings: [NSManagedObject] = []
   
   init() {
-    super.init(collectionViewLayout: UICollectionViewFlowLayout())
+    let layout = UICollectionViewFlowLayout()
+    layout.sectionInset = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
+    layout.minimumInteritemSpacing = 15
+    layout.minimumLineSpacing = 15
+    super.init(collectionViewLayout: layout)
   }
   
   required init?(coder: NSCoder) {
@@ -49,7 +53,6 @@ class RecordingsListCollectionVC: UICollectionViewController, UICollectionViewDe
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
     let layout = collectionViewLayout as! UICollectionViewFlowLayout
-    
     let numberOfColumns: CGFloat = 2
     let totalSpacing = layout.sectionInset.left + layout.sectionInset.right + (layout.minimumInteritemSpacing * (numberOfColumns - 1))
     let adjustedWidth = (collectionView.bounds.width - totalSpacing) / numberOfColumns
