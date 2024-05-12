@@ -41,6 +41,7 @@ class RecordingCell: UICollectionViewCell {
     previewImageView = UIImageView()
     previewImageView.contentMode = .scaleAspectFill
     previewImageView.clipsToBounds = true
+    previewImageView.image = UIImage(systemName: "questionmark.video")
     
     addSubview(tagLabel)
     addSubview(durationLabel)
@@ -77,6 +78,8 @@ class RecordingCell: UICollectionViewCell {
     
     if let videoURL = recording.value(forKey: "videoURL") as? String {
       setThumbnailFromVideo(videoURL: videoURL)
+    } else {
+      previewImageView.image = UIImage(systemName: "questionmark.video")
     }
   }
   
@@ -104,7 +107,9 @@ class RecordingCell: UICollectionViewCell {
           self.previewImageView.image = thumbnail
         }
       } catch {
-        print("Error generating thumbnail: \(error.localizedDescription)")
+        DispatchQueue.main.async {
+          self.previewImageView.image = UIImage(systemName: "questionmark.video")
+        }
       }
     }
   }
