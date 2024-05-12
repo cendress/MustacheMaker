@@ -28,8 +28,6 @@ class RecordingCell: UICollectionViewCell {
   //MARK: - Setup UI method
   
   private func setupViews() {
-    backgroundColor = .lightGray
-    
     tagLabel = UILabel()
     tagLabel.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
     tagLabel.textColor = .label
@@ -39,7 +37,7 @@ class RecordingCell: UICollectionViewCell {
     durationLabel.textColor = .label
     
     previewImageView = UIImageView()
-    previewImageView.contentMode = .scaleAspectFill
+    previewImageView.contentMode = .scaleAspectFit
     previewImageView.clipsToBounds = true
     previewImageView.image = UIImage(systemName: "questionmark.video")
     
@@ -52,12 +50,12 @@ class RecordingCell: UICollectionViewCell {
     previewImageView.translatesAutoresizingMaskIntoConstraints = false
     
     NSLayoutConstraint.activate([
-      previewImageView.topAnchor.constraint(equalTo: topAnchor),
+      previewImageView.topAnchor.constraint(equalTo: topAnchor, constant: 10),
       previewImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
       previewImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
       previewImageView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.6),
       
-      tagLabel.topAnchor.constraint(equalTo: previewImageView.bottomAnchor, constant: 2),
+      tagLabel.topAnchor.constraint(equalTo: previewImageView.bottomAnchor, constant: 10),
       tagLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5),
       tagLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5),
       
