@@ -35,6 +35,7 @@ class RecordingsListCollectionVC: UICollectionViewController, UICollectionViewDe
     NotificationCenter.default.addObserver(self, selector: #selector(fetchRecordings), name: NSNotification.Name("NewRecordingSaved"), object: nil)
   }
   
+  // Deinitialize notification observer to deallocate from memory
   deinit {
     NotificationCenter.default.removeObserver(self)
   }
