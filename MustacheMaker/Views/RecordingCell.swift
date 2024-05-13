@@ -74,6 +74,7 @@ class RecordingCell: UICollectionViewCell {
       durationLabel.text = "\(formatDuration(duration))"
     }
     
+    // Must use AVFoundation to access video URL
     if let videoURL = recording.value(forKey: "videoURL") as? String {
       setThumbnailFromVideo(videoURL: videoURL)
     } else {
@@ -91,6 +92,7 @@ class RecordingCell: UICollectionViewCell {
     return formatter.string(from: TimeInterval(duration)) ?? ""
   }
   
+  // Must use AVFoundation in order to access video URL
   private func setThumbnailFromVideo(videoURL: String) {
     DispatchQueue.global().async {
       let asset = AVAsset(url: URL(fileURLWithPath: videoURL))
