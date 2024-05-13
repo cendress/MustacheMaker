@@ -1,4 +1,4 @@
-# 🥸 MustacheMaker
+# 🎥 MustacheMaker
 
 **MustacheMaker** is an iOS app that leverages **ARKit** to add virtual mustaches to users' faces in real-time. It's designed to be fun and engaging, allowing users to experiment with different styles and capture unique moments.
 
