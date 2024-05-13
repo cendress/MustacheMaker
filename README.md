@@ -18,7 +18,6 @@ https://github.com/cendress/MustacheMaker/assets/95492688/ad348f65-642b-4c6f-834
 
 To get started with MustacheMaker, follow these steps:
 
-```bash
 # Clone the repository
 git clone https://github.com/cendress/MustacheMaker.git
 
