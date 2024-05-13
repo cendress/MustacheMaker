@@ -14,18 +14,6 @@
 
 https://github.com/cendress/MustacheMaker/assets/95492688/ad348f65-642b-4c6f-834b-0e3c63dfa472
 
-## 🛠 Installation
-
-To get started with MustacheMaker, follow these steps:
-
-# Clone the repository
-git clone https://github.com/cendress/MustacheMaker.git
-
-# Open the project in Xcode
-open MustacheMaker.xcodeproj
-
-# Build and run the project on the desired simulator or device
-
 ## 📋 Requirements
 
 - **iOS 15.0 or later**: Ensure your device is running at least iOS 15.0.
