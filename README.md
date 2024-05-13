@@ -39,7 +39,7 @@ Contributions to MustacheMaker are highly encouraged and appreciated. Here are a
 
 Should you have any queries or require support, please don't hesitate to reach out via email:
 
-- **Email**: [centsageapp@gmail.com](mailto:centsageapp@gmail.com)
+- **Email**: [Gmail](mailto:centsageapp@gmail.com)
 
 Alternatively, you can visit the project's GitHub repository for more information:
 
